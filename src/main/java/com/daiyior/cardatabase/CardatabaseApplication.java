@@ -7,22 +7,27 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.daiyior.cardatabase.domain.AppUser;
+import com.daiyior.cardatabase.domain.AppUserRepository;
 import com.daiyior.cardatabase.domain.Car;
 import com.daiyior.cardatabase.domain.CarRepository;
 import com.daiyior.cardatabase.domain.Owner;
 import com.daiyior.cardatabase.domain.OwnerRepository;
 @SpringBootApplication
 public class CardatabaseApplication implements CommandLineRunner {
+
 	private static final Logger logger = LoggerFactory.getLogger(CardatabaseApplication.class);
 
+	private final AppUserRepository urepository;
 	private final CarRepository repository;
 	private final OwnerRepository orepository;
 
-	public CardatabaseApplication(CarRepository repository,  OwnerRepository orepository) {
-		this.repository = repository;
-		this.orepository = orepository;
-
-	}
+	public CardatabaseApplication(CarRepository repository, 
+OwnerRepository orepository, AppUserRepository urepository) {
+ this.repository = repository;
+ this.orepository = orepository;
+ this.urepository = urepository;
+}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CardatabaseApplication.class, args);
@@ -89,6 +94,13 @@ repository.save(new Car("BMW", "Z4", "Blue", "FGH890", 2024, 49000, owner20));
 		// Fetch all cars and log to console
 		for (Car car : repository.findAll()) {
 			logger.info("brand: {}, model: {}", car.getBrand(), car.getModel());
-		}	
+		}
+// Username: user, password: user
+urepository.save(new AppUser("user", "$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue", "USER"));
+// Username: admin, password: admin
+urepository.save(new AppUser("admin","$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW", "ADMIN"));
+
 	}
+
+	
 }

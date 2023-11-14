@@ -1,5 +1,5 @@
 package com.daiyior.cardatabase.domain;
 
-public class AccountCredentials {
+public record AccountCredentials (String username, String password){
     
 }
